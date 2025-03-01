@@ -33,7 +33,7 @@ jobs:
         run: pytest --html=pytest_report.html --self-contained-html
 
       - name: Upload Test Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Test-Reports
           path: |

@@ -1,3 +1,10 @@
+#This GitHub Actions CI pipeline ensures code quality, security, and testing for a Python project. It runs on push to main and pull requests, using Python 3.9. 
+#The workflow installs dependencies, performs Flake8 linting for code style, Bandit scanning for security issues, and Pytest for unit tests, generating reports. 
+#Finally, it uploads all reports as artifacts for debugging, ensuring clean, secure, and well-tested code before merging.
+
+
+
+
 name: Python CI Pipeline
 
 on: 

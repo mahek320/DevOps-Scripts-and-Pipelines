@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pytest pytest-html flake8 bandit
+          pip install pytest pytest-html pytest-cov flake8 bandit
 
       - name: Run Linting (Flake8)
         run: flake8 --output-file=flake8_report.txt || true
@@ -37,7 +37,7 @@ jobs:
         run: bandit -r . -o bandit_report.txt || true
 
       - name: Run Tests & Generate HTML Report
-        run: pytest --html=pytest_report.html --self-contained-html || true
+        run: pytest --cov=. --cov-report=term --cov-report=html --html=pytest_report.html --self-contained-html || true
 
       - name: Upload Test Artifacts
         uses: actions/upload-artifact@v4
@@ -47,3 +47,4 @@ jobs:
             pytest_report.html
             flake8_report.txt
             bandit_report.txt
+            htmlcov/

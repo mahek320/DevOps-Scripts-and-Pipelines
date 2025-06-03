@@ -41,14 +41,14 @@ jobs:
     - name: Run pytest with coverage
       continue-on-error: true
       run: |
-        export PYTHONPATH=$PYTHONPATH:/home/runner/work/Ci-Pipeline-Python/Ci-Pipeline-Python/src
+        export PYTHONPATH=$PYTHONPATH:/home/runner/work/DevOps-Scripts-and-Pipelines/DevOps-Scripts-and-Pipelines/src
         pytest --cov=src --cov-report=xml --cov-report=html || true
         
-    - name: Upload CI reports
+    - name: Upload Python code reports
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: CI reports
+        name: Python code reports
         path: |
           pylint-report.txt
           bandit_report.txt

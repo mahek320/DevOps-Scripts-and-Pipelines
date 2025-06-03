@@ -1,5 +1,5 @@
 name: Python Code Quality CI pipeline
-
+ 
 on: push
 
 jobs:

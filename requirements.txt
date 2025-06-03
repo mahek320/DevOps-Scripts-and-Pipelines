@@ -1,0 +1,6 @@
+pylint
+black
+pytest
+bandit
+pytest-html
+pytest-cov

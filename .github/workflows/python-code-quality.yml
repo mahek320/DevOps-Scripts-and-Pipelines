@@ -1,55 +1,99 @@
-#This GitHub Actions CI pipeline ensures code quality, security, and testing for a Python project. It runs on push to main and pull requests, using Python 3.9. 
-#The workflow installs dependencies, performs Flake8 linting for code style, Bandit scanning for security issues, and Pytest for unit tests, generating reports. 
-#Finally, it uploads all reports as artifacts for debugging, ensuring clean, secure, and well-tested code before merging.
+name: Python Code Quality CI pipeline
 
-
-
-
-name: Python CI Pipeline
-
-on: 
-  push:
-    branches:
-      - main
-  pull_request:
+on: push
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+ 
+    steps: 
+    - uses: actions/checkout@v2
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        sudo apt-get update -y
+        sudo apt install wget unzip -y
+        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610.zip -O sonar-scanner-cli.zip
+        unzip sonar-scanner-cli.zip
+        sudo mv  sonar-scanner-6.2.1.4610 sonar-scanner
+        sudo chmod -R 777 sonar-scanner
 
-      - name: Install dependencies
-        run: |
-          pip install pytest pytest-html pytest-cov flake8 bandit
+    - name: Run Linting (pylint)
+      continue-on-error: true
+      run: |
+        pylint --rcfile=.pylintrc src tests > pylint-report.txt
 
-      - name: Run Linting (Flake8)
-        run: flake8 --output-file=flake8_report.txt || true
+    - name: Check format with black
+      continue-on-error: true
+      run: |
+        black --check src tests --config pyproject.toml  
 
-      - name: Run Security Scan (Bandit)
-        run: bandit -r . -o bandit_report.txt || true
+    - name: Run Security Scan (Bandit)
+      run: bandit -r . -o bandit_report.txt || true
 
-      - name: Run Tests & Generate HTML Report
-        run: pytest --cov=. --cov-report=term --cov-report=html --html=pytest_report.html --self-contained-html || true
+    - name: Run pytest with coverage
+      continue-on-error: true
+      run: |
+        export PYTHONPATH=$PYTHONPATH:/home/runner/work/Ci-Pipeline-Python/Ci-Pipeline-Python/src
+        pytest --cov=src --cov-report=xml --cov-report=html || true
+        
+    - name: Upload CI reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: CI reports
+        path: |
+          pylint-report.txt
+          bandit_report.txt
+          htmlcov/index.html
 
-     
+      
+    - name: SonarQube Scan
+      env:
+        SONAR_URL: https://sonarcloud.io/
+        SONAR_PROJECT_KEY: mahek320_DevOps-Scripts-and-Pipelines
+        SONAR_SOURCES: src
+      run: |
+        ./sonar-scanner/bin/sonar-scanner -X \
+        -Dsonar.issuesReport.console.enable=true \
+        -Dsonar.host.url=${{ env.SONAR_URL }} \
+        -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+        -Dsonar.sources=${{ env.SONAR_SOURCES }} \
+        -Dsonar.python.coverage.reportPaths=coverage.xml \
+        -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+        -Dsonar.sourceEncoding=UTF-8 \
+        -Dsonar.verbose=true \
+        -Dsonar.organization=mahek320
 
-      - name: Debug workspace
-        run: ls -R
+    - name: Send Email Notification
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.SENDER_MAIL }}
+        password: ${{ secrets.SENDER_PASSWORD }}
+        subject: "CI Report and SonarQube Dashboard - CI"
+        to: ${{ secrets.RECEIVER_MAIL }}
+        from: GitHub Actions ${{ secrets.SENDER_MAIL }}
+        body: |
+          Hello,
 
-      - name: Upload Test Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: Test-Reports
-          path: |
-            pytest_report.html
-            flake8_report.txt
-            bandit_report.txt
-            htmlcov/
+          Please find the reports and SonarQube dashboard below:
+
+          - SonarQube Dashboard: https://sonarcloud.io/project/overview?id=mahek320_DevOps-Scripts-and-Pipelines
+          - Pylint Report, Bandit Report, and Coverage Report are attached.
+
+          Regards,
+          GitHub Actions
+        attachments: |
+          pylint-report.txt
+          bandit_report.txt
+          htmlcov/index.html

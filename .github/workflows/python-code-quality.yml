@@ -58,7 +58,7 @@ jobs:
     - name: SonarQube Scan
       env:
         SONAR_URL: https://sonarcloud.io/
-        SONAR_PROJECT_KEY: mahek320_python-ci-code-quality
+        SONAR_PROJECT_KEY: mahek320_DevOps-Scripts-and-Pipelines
         SONAR_SOURCES: src
       run: |
         ./sonar-scanner/bin/sonar-scanner -X \
@@ -88,7 +88,7 @@ jobs:
 
           Please find the reports and SonarQube dashboard below:
 
-          - SonarQube Dashboard: https://sonarcloud.io/project/overview?id=mahek320_python-ci-code-quality
+          - SonarQube Dashboard: https://sonarcloud.io/project/overview?id=mahek320_mahek320_DevOps-Scripts-and-Pipelines
           - Pylint Report, Bandit Report, and Coverage Report are attached.
 
           Regards,

@@ -1,13 +1,18 @@
-h1 align="center">🚀 Python Code Quality CI Pipeline</h1>
+<h1 align="center">🚀 Python Code Quality CI Pipeline</h1>
 
 <p align="center">
-  <a href="https://sonarcloud.io/dashboard?id=mahek320_python-ci-code-quality">
-    <img src="https://sonarcloud.io/api/project_badges/measure?project=mahek320_python-ci-code-quality&metric=alert_status" alt="Quality Gate Status">
+  <a href="https://sonarcloud.io/dashboard?id=mahek320_java-ci-code-quality">
+    <img src="https://sonarcloud.io/api/project_badges/measure?project=mahek320_python-ci-code-quality
+&metric=alert_status" alt="Quality Gate Status">
   </a>
-  <a href="https://sonarcloud.io/dashboard?id=mahek320_python-ci-code-quality">
-    <img src="https://sonarcloud.io/api/project_badges/measure?project=mahek320_python-ci-code-quality&metric=coverage" alt="Coverage">
+  <a href="https://sonarcloud.io/dashboard?id=mahek320_java-ci-code-quality">
+    <img src="https://sonarcloud.io/api/project_badges/measure?project=mahek320_python-ci-code-quality
+&metric=coverage" alt="Coverage">
   </a>
 </p>
+
+---
+
 
 ---
 

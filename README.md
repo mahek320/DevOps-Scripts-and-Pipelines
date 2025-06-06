@@ -13,7 +13,7 @@ This repository demonstrates a robust CI pipeline built with GitHub Actions to e
 - ☁️ Artifact Uploads for easy access to reports  
 
 
-📂 Pipeline Workflow
+## 📂 Pipeline Workflow
 1. Checkout Code
 2. Set Up Python Environment
 3. Install Dependencies

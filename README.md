@@ -1,4 +1,4 @@
-🚀 Python Code Quality CI Pipeline
+<h1 align="center">🚀 Python Code Quality CI Pipeline</h1>
 
 This repository demonstrates a robust CI pipeline built with GitHub Actions to ensure Python code quality, security, and maintainability. It integrates industry-standard tools like Pylint, Black, Bandit, Pytest, and SonarQube.
 

@@ -24,3 +24,10 @@ This repository demonstrates a robust CI pipeline built with GitHub Actions to e
 8. SonarQube Analysis
 9. Send Email Notification with Reports (Pylint, Bandit, Coverage, Link to SonarQube Dashboard )
 
+<p align="center">
+  <a href="https://sonarcloud.io/dashboard?id=mahek320_python-ci-code-quality">
+    <img src="https://sonarcloud.io/api/project_badges/measure?project=mahek320_python-ci-code-quality&metric=alert_status" alt="SonarCloud Status">
+  </a>
+</p>
+
+

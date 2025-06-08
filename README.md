@@ -11,6 +11,8 @@
 
 ---
 
+> A GitHub Actions-based CI pipeline for Java projects that enforces code quality, security scanning, formatting, and coverage reporting — all automated in a production-ready setup.
+
 ## 🛠️ Features
 
 - ✅ Linting with `pylint`  

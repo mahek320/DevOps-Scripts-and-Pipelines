@@ -11,7 +11,7 @@
 
 ---
 
-> A GitHub Actions-based CI pipeline for Java projects that enforces code quality, security scanning, formatting, and coverage reporting — all automated in a production-ready setup.
+> A GitHub Actions-based CI pipeline for Python projects that enforces code quality, security scanning, formatting, and coverage reporting — all automated in a production-ready setup.
 
 ## 🛠️ Features
 
